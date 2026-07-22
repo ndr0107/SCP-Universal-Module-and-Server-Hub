@@ -20,3 +20,15 @@ export async function adminUpdateModule(id: string, data: any) {
 export async function deleteModule(id: string) {
   return fetcher(`/api/modules/${id}`, { method: 'DELETE' });
 }
+
+export async function submitModule(payload: any) {
+  return fetcher('/api/modules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+}
+
+export async function getServers() {
+  return fetcher('/api/servers');
+}
+
+export async function createServer(payload: any) {
+  return fetcher('/api/servers', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+}
