@@ -1,12 +1,17 @@
-import { prisma } from '@/src/lib/prisma';
 import { NextResponse } from 'next/server';
-import { getUserFromRequest } from '@/src/lib/auth';
+import { prisma } from '@/src/lib/prisma';
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const status = url.searchParams.get('status');
+  const where: any = {};
+  if (status) where.status = status;
+
   const modules = await prisma.module.findMany({
-    include: { },
+    where,
     orderBy: { submittedAt: 'desc' },
     take: 500,
+    include: { categories: true },
   });
   return NextResponse.json({ modules });
 }
